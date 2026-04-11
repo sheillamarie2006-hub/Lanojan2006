@@ -2,9 +2,101 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Portfolio</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <title>My Creative Portfolio</title>
+</head>
+<body style="margin: 0; padding: 0; background-color: #1a001a; color: white; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; overflow-x: hidden;">
+
+    <canvas id="bubbleCanvas" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;"></canvas>
+
+    <div style="max-width: 900px; margin: 0 auto; padding: 50px 20px; text-align: center;">
+        
+
+    <script>
+        const canvas = document.getElementById('bubbleCanvas');
+        const ctx = canvas.getContext('2d');
+        let particlesArray;
+
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        class Particle {
+            constructor(x, y, directionX, directionY, size, color) {
+                this.x = x;
+                this.y = y;
+                this.directionX = directionX;
+                this.directionY = directionY;
+                this.size = size;
+                this.color = color;
+            }
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2, false);
+                ctx.fillStyle = this.color;
+                ctx.fill();
+            }
+            update() {
+                if (this.x > canvas.width || this.x < 0) {
+                    this.directionX = -this.directionX;
+                }
+                if (this.y > canvas.height || this.y < 0) {
+                    this.directionY = -this.directionY;
+                }
+                this.x += this.directionX;
+                this.y += this.directionY;
+                this.draw();
+            }
+        }
+
+        function init() {
+            particlesArray = [];
+            let numberOfParticles = (canvas.height * canvas.width) / 9000;
+            for (let i = 0; i < numberOfParticles; i++) {
+                let size = (Math.random() * 5) + 1;
+                let x = (Math.random() * ((innerWidth - size * 2) - (size * 2)) + size * 2);
+                let y = (Math.random() * ((innerHeight - size * 2) - (size * 2)) + size * 2);
+                let directionX = (Math.random() * 2) - 1;
+                let directionY = (Math.random() * 2) - 1;
+                let color = 'rgba(255, 255, 255, 0.3)';
+
+                particlesArray.push(new Particle(x, y, directionX, directionY, size, color));
+            }
+        }
+
+        function animate() {
+            requestAnimationFrame(animate);
+            ctx.clearRect(0, 0, innerWidth, innerHeight);
+            for (let i = 0; i < particlesArray.length; i++) {
+                particlesArray[i].update();
+            }
+        }
+
+        window.addEventListener('resize', function() {
+            canvas.width = innerWidth;
+            canvas.height = innerHeight;
+            init();
+        });
+
+        init();
+        animate();
+    </script>
+    <title>Portfolio - Sheilla Marie</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    
+    <style>
+        /* Basic styling to make the icons visible and spaced */
+        .social-icons a {
+            font-size: 24px;
+            margin: 0 10px;
+            color: #333; /* Change color as needed */
+            text-decoration: none;
+        }
+        .hero-image img {
+            width: 200px; /* Adjust size as needed */
+            border-radius: 50%;
+        }
+    </style>
+</head>
+<body>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
         @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&display=swap'); /* For the code block */
@@ -62,7 +154,6 @@
             display: flex;
             gap: 2.5rem;
         }
-
         .nav-links a {
             color: var(--light-text);
             text-decoration: none;
@@ -150,7 +241,7 @@
         }
         
         .about-content { flex: 1; max-width: 600px; }
-        .abou
+        .about;
         }
 
         
@@ -455,23 +546,37 @@
     </style>
 </head>
            <body>
-    <nav class="navbar">
-        <a href="#home" class="navbar-brand">Portfolio</a>
-        <div class="nav-links">
-            <a href="#home" class="active">Home</a>
-            <a href="#about">About</a>
-            <a href="#skills">Skills</a>
-            <a href="#portfolio">Links</a>
-            <a href="#achievements">Achievements</a>
-            <a href="#code-examples">Outputs</a> <a href="#tutorials">Tutorials</a> <a href="#contact">Contact</a>
-        </div>
-    </nav>
+               <div class="bubble-container">
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+</div>
+
+<nav class="navbar">
+    <a href="#home" class="navbar-brand">Portfolio</a>
+    <div class="nav-links">
+        <a href="#home">Home</a>
+        <a href="#about">About</a>
+        <a href="#skills">Skills</a>
+        <a href="#portfolio">Links</a>
+        <a href="#certificates">Certificates</a> 
+        <a href="#achievements">Experience</a>
+        <a href="#code-examples">Outputs</a> 
+        <a href="#tutorials">Tutorials</a> 
+        <a href="#contact">Contact</a>
+    </div>
+</nav>
 
 
     <section class="hero-section" id="home">
         <div class="hero-content">
             <p> </p>
-            <h1>Sheilla Marie T. Lanojan</h1>
+            <h1>SHEILLA MARIE</h1>
               <p> </p>
           <center> <div class="hero-image">
             <img src="1763417412006~2 (1).jpg" alt="Sheilla"> 
@@ -492,7 +597,7 @@
         
         <div class="about-main-flex">
             <div class="about-content">
-                <h2 class="section-title">About Me</h2>
+                <h2 class="section-title">About</h2>
                 <p>I am a passionate computer science student specializing in front-end development, focusing on creating clean, efficient, and user-friendly interfaces..</p>
                 
             </div>
@@ -572,12 +677,62 @@
         </div>
     </section>
     
+    <section id="certificates" class="section-padding" style="background-color: var(--secondary-bg);">
+    <h2 class="section-title">My Certificates</h2>
+    <p style="color: var(--light-text); margin-bottom: 2rem;">Recognitions and certifications I've earned throughout my IT journey.</p>
     
+    <div class="portfolio-grid">
+        <div class="project-card">
+            <img src="20260409_185239.jpg" alt="Certification Name">
+            <div class="project-info">
+                <h3>Webinar 1st Certificate</h3>
+            </div>
+        </div>
+
+        <div class="project-card">
+            <img src="20260409_185331.jpg" alt="Certification Name">
+            <div class="project-info">
+                <h3>Webinar 2nd Certificate</h3>
+            </div>
+        </div>
+        
+             <div class="project-card">
+            <img src="20260409_185405.jpg" alt="Certification Name">
+            <div class="project-info">
+                <h3>Webinar 3rd Certificate</h3>
+               
+            </div>
+    </div>
+    
+    
+<section id="Resume" class="section-padding" style="background-color: #1a; padding: 60px 20px; text-align: center; font-family: sans-serif;">
+    <h2 class="section-title" style="font-size: 2.5rem; margin-bottom: 10px;">My Resume</h2>
+    <p style="color: #666; margin-bottom: 2.5rem;">Click below to view or download my professional resume.</p>
+
+    <div class="resume-container" style="max-width: 700px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; gap: 2rem;">
+        
+        <div class="resume-preview" style="background: #fff; padding: 10px; border-radius: 12px; box-shadow: 0 8px 25px rgba(0,0,0,0.1); width: 100%;">
+            <img src="Messenger_creation_F3407D5B-7C65-4A1E-8A6B-73F92B650AC9.jpeg" alt="Sheilla Marie Resume Preview" style="width: 100%; border-radius: 8px; display: block;">
+        </div>
+
+        <div style="margin-top: 1rem;">
+            <a href="White Black and Orange Simple Professional A4 Resu_260409_214341.pdf" 
+               download="White Black and Orange Simple Professional A4 Resu_260409_214341.pdf" 
+               class="btn-primary" 
+               style="text-decoration: none; background-color: #ff69b4; color: white; padding: 15px 35px; border-radius: 50px; display: inline-block; transition: 0.3s; font-weight: bold; font-size: 1.1rem; box-shadow: 0 4px 15px rgba(255, 105, 180, 0.4);">
+                <i class="fas fa-download"></i> Download Full Resume (PDF)
+            </a>
+        </div>
+    </div>
+</section>
+
+
+  
     <section id="achievements" class="achievements-section section-padding">
         <center>   <h2 class="section-title">My Experience 🏆!</h2> 
             <p style="color: var(--light-text); max-width: 800px; line-height: 1.6;">
-                "I actively participated in our school's **Mobile Legends esports event**, where my team demonstrated strong
-                coordination and strategic gameplay. We got **Champion twice**. After several intense matches, we
+                "I actively participated in our school's *Mobile Legends esports event*, where my team demonstrated strong
+                coordination and strategic gameplay. We got *Champion twice*. After several intense matches, we
                 emerged as champions, making it one of the most memorable achievements of my school life."
             </p> </center>
         
@@ -588,15 +743,6 @@
                     <p>We took this photo when we have our second win.</p>
                 </div>
                 
-                <div class="gallery-item">
-                    <img src="received_4045798345750174.jpeg" alt="Group Photo" onclick="zoomImage(this)">
-                    <p>This is the second award that I achieve.</p>
-                </div>
-                
-                <div class="gallery-item">
-                    <img src="20250801_170402.jpg" alt="Award or Recognition" onclick="zoomImage(this)">
-                    <p>This Is the First award that we achieve by being a champion in MLBB.</p>
-                </div>
                 
                 <div class="gallery-item">
                     <img src="FB_IMG_1754463334760 (1) (1).jpg" alt="Award or Recognition" onclick="zoomImage(this)">
@@ -673,6 +819,7 @@
 </section>
 <p> </p>
     <p> </p>
+    
      <section id="contact">
           <center>   <h2>Send Me a Sweet Message! 💌</h2></center> 
             <form action="/submit-form" method="post" class="contact-form">
@@ -699,10 +846,10 @@
     </div>
 
     <script><div id="myModal" class="modal">
-        <span class="close">&times;</span>
-        <img class="modal-content" id="img01">
-        <div id="caption"></div>
-    </div>
+        <span class="close">&times;</span>
+        <img class="modal-content" id="img01">
+        <div id="caption"></div>
+    </div>
 
 </body>
 </html>
