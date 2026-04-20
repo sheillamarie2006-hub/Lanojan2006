@@ -458,7 +458,7 @@
             if(!val) return;
 
             // User Message
-            messages.innerHTML += <div class="user-msg">${input.value}</div>;
+            messages.innerHTML += `<div class="user-msg">${input.value}</div>`;
             input.value = '';
 
             // Bot Response
@@ -485,7 +485,7 @@
             }
 
             setTimeout(() => {
-                messages.innerHTML += <div class="bot-msg">${response}</div>;
+                messages.innerHTML += `<div class="bot-msg">${response}</div>`;
                 messages.scrollTop = messages.scrollHeight;
             }, 500);
         }
@@ -497,3 +497,4 @@
     </script>
 </body>
 </html>
+
