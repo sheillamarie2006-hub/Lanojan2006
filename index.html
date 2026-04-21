@@ -9,7 +9,17 @@
     
     <style>
         /* --- Root Styles --- */
-                .profile-image-container {
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
+
+        body, html {
+            height: 100%;
+            background-color: #440063;
+            color: white;
+            overflow-x: hidden; 
+            overflow-y: auto;
+        }
+
+        .profile-image-container {
             width: 220px; 
             aspect-ratio: 1/1;
             border-radius: 50%; 
@@ -27,32 +37,6 @@
         }
 
         .profile-image-container img { width: 100%; height: 100%; object-fit: cover; }
-
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
-
-        body, html {
-            height: 100%;
-            background-color: #440063;
-            color: white;
-            overflow-x: hidden; 
-            overflow-y: auto;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-        }
-
-        body, html {
-            height: 100%;
-            background-color: #440063;
-            color: white;
-            /* Changed from hidden to auto so laptops can scroll the whole page if needed */
-            overflow-x: hidden; 
-            overflow-y: auto;
-        }
 
         /* --- Floating Bubbles  --- */
         .background-animate {
@@ -99,7 +83,6 @@
 
         .app-container {
             width: 100%;
-            /* Removed fixed 500px max-width to allow landscape expansion */
             max-width: 1200px; 
             min-height: 100vh;
             margin: 0 auto;
@@ -111,35 +94,15 @@
             padding: 25px;
         }
 
-        /* --- Page Switching Logic --- */
-        .page {
-            display: none; 
-            flex-direction: column;
-            width: 100%;
-        }
+        .page { display: none; flex-direction: column; width: 100%; }
+        .page.active { display: flex; animation: fadeIn 0.5s ease; }
 
-        .page.active {
-            display: flex; 
-            animation: fadeIn 0.5s ease;
-        }
-
-        /* Grid layout for cards on larger screens */
         @media (min-width: 768px) {
             .about-content, .cert-content, .video-content, .project-content {
-                display: grid;
-                grid-template-columns: repeat(2, 1fr);
-                gap: 20px;
+                display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px;
             }
-            .about-content h1, .cert-content h1, .video-content h1, .project-content h1 {
-                grid-column: span 2;
-            }
-            /* Home page layout adjustment */
-            #home-page {
-                flex-direction: row;
-                align-items: center;
-                gap: 50px;
-                padding-top: 50px;
-            }
+            .about-content h1, .cert-content h1, .video-content h1, .project-content h1 { grid-column: span 2; }
+            #home-page { flex-direction: row; align-items: center; gap: 50px; padding-top: 50px; }
             .profile-section { width: 40%; }
             .content-section { width: 60%; text-align: left; }
         }
@@ -149,22 +112,11 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* --- Navigation Menu --- */
         .menu-overlay {
-            position: fixed;
-            top: -100%;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 100%;
-            max-width: 1200px;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(20px);
-            z-index: 100;
-            transition: top 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+            position: fixed; top: -100%; left: 50%; transform: translateX(-50%);
+            width: 100%; max-width: 1200px; height: 100%; background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(20px); z-index: 100; transition: top 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex; flex-direction: column; align-items: center;
         }
 
         .menu-active .menu-overlay { top: 0; }
@@ -174,60 +126,36 @@
         .menu-links li { margin: 25px 0; font-size: 1.3rem; cursor: pointer; transition: 0.3s; }
         .menu-links li:hover { color: #bf00ff; }
 
-        /* --- Header --- */
         .header { display: flex; justify-content: space-between; align-items: center; padding-bottom: 20px; }
         .header h2 { font-size: 1.4rem; }
         .header h2 span, .purple-text { color: #bf00ff; }
         .menu-icon { font-size: 1.5rem; cursor: pointer; }
 
-        /* --- Profile Section --- */
         .profile-section { display: flex; justify-content: center; padding: 20px 0; }
-        .profile-image-container {
-            width: 220px; aspect-ratio: 1/1;
-            border-radius: 50%; overflow: hidden; position: relative;
-            box-shadow: 0 0 30px rgba(191, 0, 255, 0.5);
-        }
-        .profile-image-container img { width: 100%; height: 100%; object-fit: cover; }
-
-        /* --- Content --- */
         .content-section { flex-grow: 1; display: flex; flex-direction: column; justify-content: center; }
         .profession { font-size: 2.2rem; font-weight: 800; margin-bottom: 15px; }
         .profession::after { content: '|'; animation: blink 1s infinite; }
         @keyframes blink { 50% { opacity: 0; } }
         .description { font-size: 0.95rem; color: #b3b3b3; line-height: 1.6; margin-bottom: 25px; }
 
-        /* --- Card Styles --- */
         .about-card, .cert-card, .video-card, .project-card, .contact-card {
-            background: #111;
-            padding: 20px;
-            border-radius: 15px;
-            border-left: 4px solid #bf00ff;
-            margin-bottom: 20px;
+            background: #111; padding: 20px; border-radius: 15px; border-left: 4px solid #bf00ff; margin-bottom: 20px;
         }
         .about-card h3, .cert-card h3, .video-card h3, .project-card h3, .contact-card h3 { margin-bottom: 10px; font-size: 1.1rem; }
         .skills-list { display: flex; flex-wrap: wrap; gap: 10px; list-style: none; margin-top: 10px; }
         .skills-list li { background: #222; padding: 5px 12px; border-radius: 20px; font-size: 0.8rem; border: 1px solid #333; }
 
-        /* --- Media Containers --- */
-        .cert-img-container, .video-container, .project-img-container {
-            width: 100%;
-            margin-top: 10px;
-            border-radius: 8px;
-            overflow: hidden;
-            border: 1px solid #333;
-        }
+        .cert-img-container, .video-container, .project-img-container { width: 100%; margin-top: 10px; border-radius: 8px; overflow: hidden; border: 1px solid #333; }
         .cert-img-container img, .project-img-container img { width: 100%; display: block; transition: transform 0.3s ease; }
         .project-img-container img:hover { transform: scale(1.05); }
         .video-container iframe { width: 100%; aspect-ratio: 16/9; display: block; border: none; }
 
-        /* --- Form Styles --- */
         .contact-form { display: flex; flex-direction: column; gap: 15px; }
         .form-group { display: flex; flex-direction: column; gap: 5px; }
         .form-group label { font-size: 0.85rem; color: #bf00ff; }
         .form-group input, .form-group textarea { background: #222; border: 1px solid #333; padding: 12px; border-radius: 8px; color: white; outline: none; }
         .form-group input:focus, .form-group textarea:focus { border-color: #bf00ff; }
 
-        /* --- Socials & Footer --- */
         .social-icons { display: flex; gap: 20px; margin-bottom: 30px; }
         .social-icons a { font-size: 1.6rem; color: #bf00ff; text-decoration: none; }
         .cv-button {
@@ -236,8 +164,8 @@
             font-weight: bold; cursor: pointer; margin-bottom: 10px;
             text-decoration: none; display: block; text-align: center;
         }
+        .btn-download { color: white; text-decoration: none; display: block; width: 100%; height: 100%; }
 
-        /* --- Chatbot Styles --- */
         #chat-widget { position: fixed; bottom: 20px; right: 20px; z-index: 1000; }
         #chat-button { width: 60px; height: 60px; background: #bf00ff; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.3); transition: 0.3s; }
         #chat-window { position: absolute; bottom: 75px; right: 0; width: 300px; height: 400px; background: #111; border-radius: 15px; display: none; flex-direction: column; border: 1px solid #bf00ff; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
@@ -272,7 +200,7 @@
                 <li onclick="showPage('certificates-page')">Certificates</li>
                 <li onclick="showPage('videos-page')">Videos</li>
                 <li onclick="showPage('projects-page')">Projects</li>
-                <li onclick="showPage('outputs-page')">Ouputs</li>
+                <li onclick="showPage('outputs-page')">Outputs</li>
                 <li onclick="showPage('contacts-page')">Contacts</li>
             </ul>
         </div>
@@ -303,12 +231,14 @@
                     <a href="https://www.youtube.com/@SheillaMarie-g6j"><i class="fab fa-youtube"></i></a>
                 </div>
 
-            <button class="cv-button">
-             <a href="https://drive.google.com/file/d/1GtrJFiQ7RenEzR7GeW0qmYQgjS2nKxMG/view?usp=sharing" 
-           download="Sheilla_Lanojan_Resume.pdf" 
-           class="btn-download">
-           <i class="fas fa-file-download"></i> Download My Resume (PDF)
-        </a></button>
+                <div class="cv-button">
+                    <a href="https://drive.google.com/file/d/1GtrJFiQ7RenEzR7GeW0qmYQgjS2nKxMG/view?usp=sharing" 
+                       download="Sheilla_Lanojan_Resume.pdf" 
+                       class="btn-download">
+                       <i class="fas fa-file-download"></i> Download My Resume (PDF)
+                    </a>
+                </div>
+            </main>
         </div>
 
         <div id="about-page" class="page">
@@ -353,9 +283,9 @@
                     <h3>Third Webinar Certificate</h3>
                     <div class="cert-img-container"><img src="1776762541753.png" alt="Responsive"></div>
                 </div>
-                            <div class="cert-card">
+                <div class="cert-card">
                     <h3>CISCO Certificate</h3>
-                    <div class="cert-img-container"><img src="Screenshot_20260422_064025_Files by Google.png" alt="Responsive"></div>
+                    <div class="cert-img-container"><img src="Screenshot_20260422_064025_Files by Google.png" alt="CISCO"></div>
                 </div>
             </div>
             <button class="cv-button" onclick="showPage('home-page')">Back to Home</button>
@@ -372,7 +302,7 @@
                     <h3>Coding Tutorial</h3>
                     <div class="video-container"><iframe src="https://www.youtube.com/embed/y881t8ilMyc" allowfullscreen></iframe></div>
                 </div>
-                            <div class="video-card">
+                <div class="video-card">
                     <h3>Canva Mockup</h3>
                     <div class="video-container"><iframe src="https://www.youtube.com/embed/3JZ_D3Vi9Es" allowfullscreen></iframe></div>
                 </div>
@@ -386,71 +316,64 @@
                 <div class="project-card">
                     <h3>Figma Design Portfolio</h3>
                     <a href="https://www.figma.com/proto/DUxN42QVhSXNdQWt8EAoOn/FIGMA-PORTFOLIO?node-id=0-1&t=SHRKe2h5PlyBr3ZE-1" target="_blank">
-                        <div class="project-img-container"><img src="/Screenshot_20251123_122353_WebCode (1).png" alt="Figma">
-                        </div>
+                        <div class="project-img-container"><img src="Screenshot_20251123_122353_WebCode (1).png" alt="Figma"></div>
                     </a>
-                    
                 </div>
                 <div class="project-card">
                     <h3>Canva Creative Portfolio</h3>
                     <a href="https://www.canva.com/design/DAGxQ-OLtNo/_O8d-X4iZ_AMIC7DgoWOMg/edit?utm_content=DAGxQ-OLtNo&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton" target="_blank">
-                        <div class="project-img-container"><img src="/Screenshot_20251123_121717_WebCode (1).png" alt="Canva"></div>
+                        <div class="project-img-container"><img src="Screenshot_20251123_121717_WebCode (1).png" alt="Canva"></div>
                     </a>
                 </div>
                 <div class="project-card">
                     <h3>E-commerce Website</h3>
                     <a href="https://www.figma.com/proto/qyqb1NZNjmgEUMDaSwPEYp/LANOJAN--e-commerce-?node-id=0-1&t=qdmd7lYEYc5gT1vH-1" target="_blank">
-                        <div class="project-img-container"><img src="/Screenshot_20251123_123253_WebCode (1) (1).png" alt="Canva"></div>
+                        <div class="project-img-container"><img src="Screenshot_20251123_123253_WebCode (1) (1).png" alt="Ecommerce"></div>
                     </a>
                 </div>
             </div>
             <button class="cv-button" onclick="showPage('home-page')">Back to Home</button>
         </div>
         
-        
-            <div id="outputs-page" class="page">
-        <div class="project-content">
-            <h1 class="profession" style="font-size: 1.8rem;">My <span class="purple-text">Works</span></h1>
-        
-        <div class="project-card">
-            <h3>3d Simulation of our vendo.</h3>
-            <div class="project-img-container">
-                <img src="Screenshot_20260421_212557_Photos.png" alt="Design Output 1">
-            </div>
-            <p class="description" style="margin-top: 10px; font-size: 0.85rem;"
-        </div>
-
-        <div class="project-card">
-          <h3>Product Design.</h3>
-            <div class="project-img-container">
-                <img src="Untitled3_20260421211212.jpg" alt="Design Output 2">
-            </div>
-            <p class="description" style="margin-top: 10px; font-size: 0.85rem;"
-        </div>
-
-        <div class="project-card">
-            <h3>Banner</h3>
-            <div class="project-img-container">
-                <img src="Untitled4_20260421211308.jpg" alt="Design Output 3">
-            </div>
-            <p class="description" style="margin-top: 10px; font-size: 0.85rem;"
-        </div>
-
-        <div class="project-card">
-            <h3>T-shirt design</h3>
-            <div class="project-img-container">
-                <img src="Screenshot_20251124_161119_Photos.png" alt="Design Output 4">
-            </div>
-
-            <p class="description" style="margin-top: 10px; font-size: 0.85rem;"
-        </div>
-            <div class="project-card">
-                <h3>E-commerce Website</h3>
-                <div class="project-img-container"><img src="Screenshot_20260421_205957_Google.png" alt="Design Output 5"></div>
+        <div id="outputs-page" class="page">
+            <div class="project-content">
+                <h1 class="profession" style="font-size: 1.8rem;">My <span class="purple-text">Works</span></h1>
+            
+                <div class="project-card">
+                    <h3>3d Simulation of our vendo.</h3>
+                    <div class="project-img-container">
+                        <img src="Screenshot_20260421_212557_Photos.png" alt="Design Output 1">
+                    </div>
                 </div>
-    </div>
-    <button class="cv-button" onclick="showPage('home-page')">Back to Home</button>
-</div>
+
+                <div class="project-card">
+                    <h3>Product Design.</h3>
+                    <div class="project-img-container">
+                        <img src="Untitled3_20260421211212.jpg" alt="Design Output 2">
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <h3>Banner</h3>
+                    <div class="project-img-container">
+                        <img src="Untitled4_20260421211308.jpg" alt="Design Output 3">
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <h3>T-shirt design</h3>
+                    <div class="project-img-container">
+                        <img src="Screenshot_20251124_161119_Photos.png" alt="Design Output 4">
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <h3>E-commerce Website</h3>
+                    <div class="project-img-container"><img src="Screenshot_20260421_205957_Google.png" alt="Design Output 5"></div>
+                </div>
+            </div>
+            <button class="cv-button" onclick="showPage('home-page')">Back to Home</button>
+        </div>
 
         <div id="contacts-page" class="page">
             <div class="contact-content">
@@ -464,15 +387,15 @@
                         <button type="submit" class="cv-button">Send Message</button>
                     </form>
                 </div>
+                <div class="contact-card" style="text-align: center;">
+                    <h3>Find me here</h3>
+                    <div class="social-icons" style="justify-content: center; margin-bottom: 0;">
+                        <a href="https://www.facebook.com/sheiluvMe"><i class="fab fa-facebook"></i></a>
+                        <a href="https://www.instagram.com/shei_luvx?igsh=ZjA0YjN6N2lubGt5v"><i class="fab fa-instagram"></i></a>
+                        <a href="https://www.tiktok.com/@shei_luv3?_r=1&_t=ZS-91dGEOigigy"><i class="fab fa-tiktok"></i></a>
+                    </div>
+                </div>
             </div>
-                    <div class="contact-card" style="text-align: center;">
-            <h3>Find me here</h3>
-            <div class="social-icons" style="justify-content: center; margin-bottom: 0;">
-                <a href="https://www.facebook.com/sheiluvMe"><i class="fab fa-facebook"></i></a>
-                <a href="https://www.instagram.com/shei_luvx?igsh=ZjA0YjN6N2lubGt5v"><i class="fab fa-instagram"></i></a>
-                <a href="https://www.tiktok.com/@shei_luv3?_r=1&_t=ZS-91dGEOigigy"><i class="fab fa-tiktok"></i></a>
-            </div>
-        </div>
             <button class="cv-button" onclick="showPage('home-page')">Back to Home</button>
         </div>
 
@@ -480,7 +403,7 @@
 
     <div id="chat-widget">
         <div id="chat-window">
-            <div id="chat-header"><span>Shei Bot</span><i class="fas fa-times" onclick="toggleChat()"></i></div>
+            <div id="chat-header"><span>Shei Bot</span><i class="fas fa-times" onclick="toggleChat()" style="cursor:pointer"></i></div>
             <div id="chat-messages"><div class="bot-msg">Hi! Need help navigating?</div></div>
             <div id="chat-input-area">
                 <input type="text" id="chat-input" placeholder="Type here...">
