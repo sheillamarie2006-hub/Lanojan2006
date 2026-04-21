@@ -9,6 +9,35 @@
     
     <style>
         /* --- Root Styles --- */
+                .profile-image-container {
+            width: 220px; 
+            aspect-ratio: 1/1;
+            border-radius: 50%; 
+            overflow: hidden; 
+            position: relative;
+            border: 3px solid #bf00ff;
+            box-shadow: 0 0 20px #bf00ff, 0 0 40px #bf00ff88;
+            animation: glow-pulse 3s infinite ease-in-out;
+        }
+
+        @keyframes glow-pulse {
+            0% { box-shadow: 0 0 15px #bf00ff, 0 0 30px #bf00ff66; transform: scale(1); }
+            50% { box-shadow: 0 0 30px #bf00ff, 0 0 60px #bf00ffaa; transform: scale(1.02); }
+            100% { box-shadow: 0 0 15px #bf00ff, 0 0 30px #bf00ff66; transform: scale(1); }
+        }
+
+        .profile-image-container img { width: 100%; height: 100%; object-fit: cover; }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
+
+        body, html {
+            height: 100%;
+            background-color: #440063;
+            color: white;
+            overflow-x: hidden; 
+            overflow-y: auto;
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -20,7 +49,9 @@
             height: 100%;
             background-color: #440063;
             color: white;
-            overflow: hidden; 
+            /* Changed from hidden to auto so laptops can scroll the whole page if needed */
+            overflow-x: hidden; 
+            overflow-y: auto;
         }
 
         /* --- Floating Bubbles  --- */
@@ -68,8 +99,9 @@
 
         .app-container {
             width: 100%;
-            max-width: 500px;
-            height: 100vh;
+            /* Removed fixed 500px max-width to allow landscape expansion */
+            max-width: 1200px; 
+            min-height: 100vh;
             margin: 0 auto;
             background-color: rgba(0, 0, 0, 0.7); 
             backdrop-filter: blur(5px);
@@ -77,19 +109,39 @@
             display: flex;
             flex-direction: column;
             padding: 25px;
-            overflow-y: auto;
         }
 
         /* --- Page Switching Logic --- */
         .page {
             display: none; 
             flex-direction: column;
-            height: 100%;
+            width: 100%;
         }
 
         .page.active {
             display: flex; 
             animation: fadeIn 0.5s ease;
+        }
+
+        /* Grid layout for cards on larger screens */
+        @media (min-width: 768px) {
+            .about-content, .cert-content, .video-content, .project-content {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 20px;
+            }
+            .about-content h1, .cert-content h1, .video-content h1, .project-content h1 {
+                grid-column: span 2;
+            }
+            /* Home page layout adjustment */
+            #home-page {
+                flex-direction: row;
+                align-items: center;
+                gap: 50px;
+                padding-top: 50px;
+            }
+            .profile-section { width: 40%; }
+            .content-section { width: 60%; text-align: left; }
         }
 
         @keyframes fadeIn {
@@ -104,11 +156,10 @@
             left: 50%;
             transform: translateX(-50%);
             width: 100%;
-            max-width: 500px;
+            max-width: 1200px;
             height: 100%;
-            background: rgba(0, 0, 0, 0.4);
+            background: rgba(0, 0, 0, 0.8);
             backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
             z-index: 100;
             transition: top 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             display: flex;
@@ -132,7 +183,7 @@
         /* --- Profile Section --- */
         .profile-section { display: flex; justify-content: center; padding: 20px 0; }
         .profile-image-container {
-            width: 60vw; max-width: 220px; aspect-ratio: 1/1;
+            width: 220px; aspect-ratio: 1/1;
             border-radius: 50%; overflow: hidden; position: relative;
             box-shadow: 0 0 30px rgba(191, 0, 255, 0.5);
         }
@@ -146,7 +197,6 @@
         .description { font-size: 0.95rem; color: #b3b3b3; line-height: 1.6; margin-bottom: 25px; }
 
         /* --- Card Styles --- */
-        .about-content, .cert-content, .video-content, .project-content, .contact-content { padding-top: 10px; }
         .about-card, .cert-card, .video-card, .project-card, .contact-card {
             background: #111;
             padding: 20px;
@@ -184,12 +234,12 @@
             background-color: #bf00ff; color: white; border: none;
             padding: 16px; border-radius: 12px; width: 100%;
             font-weight: bold; cursor: pointer; margin-bottom: 10px;
+            text-decoration: none; display: block; text-align: center;
         }
 
         /* --- Chatbot Styles --- */
         #chat-widget { position: fixed; bottom: 20px; right: 20px; z-index: 1000; }
         #chat-button { width: 60px; height: 60px; background: #bf00ff; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.3); transition: 0.3s; }
-        #chat-button:hover { transform: scale(1.1); }
         #chat-window { position: absolute; bottom: 75px; right: 0; width: 300px; height: 400px; background: #111; border-radius: 15px; display: none; flex-direction: column; border: 1px solid #bf00ff; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
         #chat-header { background: #bf00ff; padding: 15px; font-weight: bold; font-size: 0.9rem; display: flex; justify-content: space-between; }
         #chat-messages { flex: 1; padding: 15px; overflow-y: auto; font-size: 0.85rem; display: flex; flex-direction: column; gap: 10px; }
@@ -205,13 +255,7 @@
 
     <div class="background-animate">
         <div class="bubbles">
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
+            <span></span><span></span><span></span><span></span><span></span><span></span><span></span>
         </div>
     </div>
 
@@ -257,7 +301,7 @@
                     <a href="https://www.tiktok.com/@shei_luv3?_r=1&_t=ZS-91dGEOigigy"><i class="fab fa-tiktok"></i></a>
                     <a href="https://www.youtube.com/@SheillaMarie-g6j"><i class="fab fa-youtube"></i></a>
                 </div>
-            </main>
+
             <button class="cv-button">
              <a href="https://drive.google.com/file/d/1GtrJFiQ7RenEzR7GeW0qmYQgjS2nKxMG/view?usp=sharing" 
            download="Sheilla_Lanojan_Resume.pdf" 
@@ -276,17 +320,13 @@
                 <div class="about-card">
                     <h3>Hobbies & Interests </h3>
                     <ul class="skills-list">
-                        <li>Drawing</li>
-                        <li>Dancing</li>
-                        <li>Playing online Games</li>
+                        <li>Drawing</li><li>Dancing</li><li>Playing online Games</li>
                     </ul>
                 </div>
                 <div class="about-card">
                     <h3>Creative Skills</h3>
                     <ul class="skills-list">
-                        <li>Figma design</li>
-                        <li>Canva Design</li>
-                        <li>Capcut Editing</li>
+                        <li>Figma design</li><li>Canva Design</li><li>Capcut Editing</li>
                     </ul>
                 </div>
             </div>
@@ -298,21 +338,15 @@
                 <h1 class="profession" style="font-size: 1.8rem;">My <span class="purple-text">Certificates</span></h1>
                 <div class="cert-card">
                     <h3>First Webinar Certificate</h3>
-                    <div class="cert-img-container">
-                        <img src="20260409_185239.jpg" alt="Web Dev Certificate">
-                    </div>
+                    <div class="cert-img-container"><img src="1776763232248.png" alt="Web Dev"></div>
                 </div>
                 <div class="cert-card">
                     <h3>Second Webinar Certificate</h3>
-                    <div class="cert-img-container">
-                        <img src="20260409_185331.jpg" alt="UIUX Certificate">
-                    </div>
+                    <div class="cert-img-container"><img src="1776762854585.png" alt="UIUX"></div>
                 </div>
                 <div class="cert-card">
                     <h3>Third Webinar Certificate</h3>
-                    <div class="cert-img-container">
-                        <img src="20260409_185405.jpg" alt="Responsive Design Certificate">
-                    </div>
+                    <div class="cert-img-container"><img src="1776762541753.png" alt="Responsive"></div>
                 </div>
             </div>
             <button class="cv-button" onclick="showPage('home-page')">Back to Home</button>
@@ -323,21 +357,11 @@
                 <h1 class="profession" style="font-size: 1.8rem;">YouTube <span class="purple-text">Videos</span></h1>
                 <div class="video-card">
                     <h3>Project Presentation</h3>
-                    <div class="video-container">
-                        <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" allowfullscreen></iframe>
-                    </div>
+                    <div class="video-container"><iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" allowfullscreen></iframe></div>
                 </div>
                 <div class="video-card">
                     <h3>Coding Tutorial</h3>
-                    <div class="video-container">
-                        <iframe src="https://www.youtube.com/embed/y881t8ilMyc" allowfullscreen></iframe>
-                    </div>
-                </div>
-                <div class="video-card">
-                    <h3>Design Showcase</h3>
-                    <div class="video-container">
-                        <iframe src="https://www.youtube.com/embed/3JZ_D3Vi9Es" allowfullscreen></iframe>
-                    </div>
+                    <div class="video-container"><iframe src="https://www.youtube.com/embed/y881t8ilMyc" allowfullscreen></iframe></div>
                 </div>
             </div>
             <button class="cv-button" onclick="showPage('home-page')">Back to Home</button>
@@ -349,25 +373,21 @@
                 <div class="project-card">
                     <h3>Figma Design Portfolio</h3>
                     <a href="https://www.figma.com/proto/DUxN42QVhSXNdQWt8EAoOn/FIGMA-PORTFOLIO?node-id=0-1&t=SHRKe2h5PlyBr3ZE-1" target="_blank">
-                        <div class="project-img-container">
-                            <img src="Screenshot_20251123_122353_WebCode (1).png" alt="Figma Project">
+                        <div class="project-img-container"><img src="/Screenshot_20251123_122353_WebCode (1).png" alt="Figma">
                         </div>
                     </a>
+                    
                 </div>
                 <div class="project-card">
                     <h3>Canva Creative Portfolio</h3>
                     <a href="https://www.canva.com/design/DAGxQ-OLtNo/_O8d-X4iZ_AMIC7DgoWOMg/edit?utm_content=DAGxQ-OLtNo&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton" target="_blank">
-                        <div class="project-img-container">
-                            <img src="Screenshot_20251123_121717_WebCode (1).png" alt="Canva Project">
-                        </div>
+                        <div class="project-img-container"><img src="/Screenshot_20251123_121717_WebCode (1).png" alt="Canva"></div>
                     </a>
                 </div>
                 <div class="project-card">
-                    <h3>E-Commerce Website</h3>
+                    <h3>E-commerce Website</h3>
                     <a href="https://www.figma.com/proto/qyqb1NZNjmgEUMDaSwPEYp/LANOJAN--e-commerce-?node-id=0-1&t=qdmd7lYEYc5gT1vH-1" target="_blank">
-                        <div class="project-img-container">
-                            <img src="Screenshot_20251123_123253_WebCode (1) (1).png" alt="Ecommerce Project">
-                        </div>
+                        <div class="project-img-container"><img src="/Screenshot_20251123_123253_WebCode (1) (1).png" alt="Canva"></div>
                     </a>
                 </div>
             </div>
@@ -379,31 +399,22 @@
                 <h1 class="profession" style="font-size: 1.8rem;">Get In <span class="purple-text">Touch</span></h1>
                 <div class="contact-card">
                     <h3>Send me a message</h3>
-                    <form class="contact-form">
-                        <div class="form-group">
-                            <label>Name</label>
-                            <input type="text" placeholder="Enter your name">
-                        </div>
-                        <div class="form-group">
-                            <label>Email</label>
-                            <input type="email" placeholder="Enter your email">
-                        </div>
-                        <div class="form-group">
-                            <label>Message</label>
-                            <textarea rows="4" placeholder="Your message..."></textarea>
-                        </div>
-                        <button type="button" class="cv-button" style="margin-top: 10px;">Send Message</button>
+                    <form action="https://formspree.io/f/xdaylynz" method="POST" class="contact-form">
+                        <div class="form-group"><label>Name</label><input type="text" name="name" placeholder="Name" required></div>
+                        <div class="form-group"><label>Email</label><input type="email" name="email" placeholder="Email" required></div>
+                        <div class="form-group"><label>Message</label><textarea name="message" rows="4" placeholder="Message" required></textarea></div>
+                        <button type="submit" class="cv-button">Send Message</button>
                     </form>
                 </div>
-                <div class="contact-card" style="text-align: center;">
-                    <h3>Find me here</h3>
-                    <div class="social-icons" style="justify-content: center; margin-bottom: 0;">
-                        <a href="https://www.facebook.com/sheiluvMe"><i class="fab fa-facebook"></i></a>
-                        <a href="https://www.instagram.com/shei_luvx?igsh=ZjA0YjN6N2lubGt5v"><i class="fab fa-instagram"></i></a>
-                        <a href="https://www.tiktok.com/@shei_luv3?_r=1&_t=ZS-91dGEOigigy"><i class="fab fa-tiktok"></i></a>
-                    </div>
-                </div>
             </div>
+                    <div class="contact-card" style="text-align: center;">
+            <h3>Find me here</h3>
+            <div class="social-icons" style="justify-content: center; margin-bottom: 0;">
+                <a href="https://www.facebook.com/sheiluvMe"><i class="fab fa-facebook"></i></a>
+                <a href="https://www.instagram.com/shei_luvx?igsh=ZjA0YjN6N2lubGt5v"><i class="fab fa-instagram"></i></a>
+                <a href="https://www.tiktok.com/@shei_luv3?_r=1&_t=ZS-91dGEOigigy"><i class="fab fa-tiktok"></i></a>
+            </div>
+        </div>
             <button class="cv-button" onclick="showPage('home-page')">Back to Home</button>
         </div>
 
@@ -411,21 +422,14 @@
 
     <div id="chat-widget">
         <div id="chat-window">
-            <div id="chat-header">
-                <span>Shei Bot</span>
-                <i class="fas fa-times" style="cursor:pointer" onclick="toggleChat()"></i>
-            </div>
-            <div id="chat-messages">
-                <div class="bot-msg">Hi! Ask me to see my "Projects", "Certificates", "About", "Videos", or "Contact" info!</div>
-            </div>
+            <div id="chat-header"><span>Shei Bot</span><i class="fas fa-times" onclick="toggleChat()"></i></div>
+            <div id="chat-messages"><div class="bot-msg">Hi! Need help navigating?</div></div>
             <div id="chat-input-area">
                 <input type="text" id="chat-input" placeholder="Type here...">
                 <i class="fas fa-paper-plane" id="chat-send" onclick="handleChat()"></i>
             </div>
         </div>
-        <div id="chat-button" onclick="toggleChat()">
-            <i class="fas fa-comments" style="color:white; font-size: 1.5rem;"></i>
-        </div>
+        <div id="chat-button" onclick="toggleChat()"><i class="fas fa-comments" style="color:white; font-size: 1.5rem;"></i></div>
     </div>
 
     <script>
@@ -441,60 +445,32 @@
             pages.forEach(p => p.classList.remove('active'));
             document.getElementById(pageId).classList.add('active');
             body.classList.remove('menu-active');
-            document.querySelector('.app-container').scrollTop = 0;
+            window.scrollTo(0, 0);
         }
 
-        // Chatbot Logic
         function toggleChat() {
-            const window = document.getElementById('chat-window');
-            window.style.display = window.style.display === 'flex' ? 'none' : 'flex';
+            const win = document.getElementById('chat-window');
+            win.style.display = win.style.display === 'flex' ? 'none' : 'flex';
         }
 
         function handleChat() {
             const input = document.getElementById('chat-input');
             const messages = document.getElementById('chat-messages');
             const val = input.value.toLowerCase();
-            
             if(!val) return;
-
-            // User Message
             messages.innerHTML += `<div class="user-msg">${input.value}</div>`;
             input.value = '';
-
-            // Bot Response
-            let response = "I'm not sure how to help with that. Try saying 'projects' or 'contact'.";
-            
-            if(val.includes('project')) {
-                response = "Navigating to Projects...";
-                showPage('projects-page');
-            } else if(val.includes('about') || val.includes('who are you')) {
-                response = "Opening About Me...";
-                showPage('about-page');
-            } else if(val.includes('cert')) {
-                response = "Showing my Certificates...";
-                showPage('certificates-page');
-            } else if(val.includes('video')) {
-                response = "Here are my YouTube videos!";
-                showPage('videos-page');
-            } else if(val.includes('contact') || val.includes('message')) {
-                response = "Taking you to my contact form...";
-                showPage('contacts-page');
-            } else if(val.includes('home') || val.includes('hello') || val.includes('hi')) {
-                response = "Welcome home!";
-                showPage('home-page');
-            }
-
+            let response = "Try 'projects' or 'contact'.";
+            if(val.includes('project')) { response = "Opening Projects..."; showPage('projects-page'); }
+            else if(val.includes('about')) { response = "Opening About..."; showPage('about-page'); }
+            else if(val.includes('contact')) { response = "Opening Contact..."; showPage('contacts-page'); }
             setTimeout(() => {
                 messages.innerHTML += `<div class="bot-msg">${response}</div>`;
                 messages.scrollTop = messages.scrollHeight;
             }, 500);
         }
 
-        // Allow Enter key for chat
-        document.getElementById('chat-input').addEventListener('keypress', function (e) {
-            if (e.key === 'Enter') handleChat();
-        });
+        document.getElementById('chat-input').addEventListener('keypress', (e) => { if (e.key === 'Enter') handleChat(); });
     </script>
 </body>
 </html>
-
